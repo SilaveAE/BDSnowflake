@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: bd_snowflake
+    environment:
+      POSTGRES_USER: student
+      POSTGRES_PASSWORD: student
+      POSTGRES_DB: snowflake_lab
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/data
+      - ./sql/00_load_mock_data.sql:/docker-entrypoint-initdb.d/00_load_mock_data.sql
+      - ./sql/01_ddl.sql:/docker-entrypoint-initdb.d/01_ddl.sql
+      - ./sql/02_dml.sql:/docker-entrypoint-initdb.d/02_dml.sql
+    restart: unless-stopped
